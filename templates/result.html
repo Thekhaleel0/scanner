@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Result - CyberScan Pro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+        }
+        .result-box {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: #1e2a38;
+            border-radius: 20px;
+            box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.9);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        .highlight {
+            background-color: #ff6f00;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: white;
+        }
+        .btn-nav {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .btn-nav a {
+            flex: 1;
+            text-align: center;
+        }
+        .btn-custom {
+            background-color: #00bcd4;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #0097a7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html">CyberScan Pro</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('result_store') }}">Store Result</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scan Result -->
+    <div class="result-box">
+        <h2 class="result-title text-center">Website Vulnerability Scan Result</h2>
+
+        {% if entry %}
+            <p class="text-center">Website: <span class="highlight">{{ entry.website }}</span></p>
+            <p class="text-center">Detected Vulnerability: <span class="highlight">{{ entry.vulnerability }}</span></p>
+            <p class="text-center">Recommended Fix Code Snippet:</p>
+            <pre class="bg-dark text-white p-3 rounded">{{ entry.description }}</pre>
+        {% else %}
+            <p class="text-center text-warning">No scan result found for your account yet.</p>
+        {% endif %}
+
+        <div class="btn-nav text-center">
+            <a href="{{ url_for('result_store') }}" class="btn btn-custom">Store Result</a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-custom">Go to Dashboard</a>
+            <a href="{{ url_for('about') }}" class="btn btn-custom">About</a>
+            <a href="{{ url_for('predict') }}" class="btn btn-custom">Scan Another</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

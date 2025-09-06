@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Vulnerability Scanner</title>
+</head>
+<body>
+    <h2>Enter Website to Scan</h2>
+    <form method="post">
+        <input type="text" name="website" placeholder="http://example.com" required>
+        <button type="submit">Scan</button>
+    </form>
+
+    {% if vulnerabilities %}
+        <h3>Scan Results:</h3>
+        <ul>
+        {% for v in vulnerabilities %}
+            <li>
+                <strong>{{ v[0] }}</strong>: {{ v[1] }}<br>
+                {% if v[2] %}
+                    <details>
+                        <summary><b>Vulnerable Code</b></summary>
+                        <pre>{{ v[2] }}</pre>
+                    </details>
+                    <details>
+                        <summary><b>Fix Code</b></summary>
+                        <pre>{{ v[3] }}</pre>
+                    </details>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
